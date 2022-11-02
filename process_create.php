@@ -1,4 +1,4 @@
-성<?php
+<?php
 	$conn = mysqli_connect('localhost', 'root', 'root', 'opentutorials');
 	$sql = "
 		INSERT INTO topic
