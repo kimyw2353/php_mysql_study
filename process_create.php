@@ -1,7 +1,7 @@
 <?php
 	$conn = mysqli_connect('localhost', 'root', 'root', 'opentutorials');
 	
-	$filterd = array(
+	$filtered = array(
 		'title'=>mysqli_real_escape_string($conn, $_POST['title']),
 		'description'=>mysqli_real_escape_string($conn, $_POST['description'])
 	);
@@ -9,8 +9,8 @@
 		INSERT INTO topic
 		(title, description, created)
 		VALUES(
-		       '{$_POST['title']}',
-		       '{$_POST['description']}',
+		       '{$filtered['title']}',
+		       '{$filtered['description']}',
 		       NOW()
 		)
 	";
