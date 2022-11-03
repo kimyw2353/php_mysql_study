@@ -15,7 +15,8 @@
 		'description' => 'Hello Yael'
 	);
     if (isset($_GET['id'])) {
-	$sql = "SELECT * FROM topic WHERE id = {$_GET['id']}";
+    $filteredId = mysqli_real_escape_string($conn, $_GET['id']);
+	$sql = "SELECT * FROM topic WHERE id = {$filteredId}";
 	$result = mysqli_query($conn, $sql);
 	$row = mysqli_fetch_array($result);
 	$article['title'] = $row['title'];
