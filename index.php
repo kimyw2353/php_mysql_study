@@ -1,28 +1,30 @@
 <?php
-	$conn = mysqli_connect('localhost', 'root', 'root', 'opentutorials');
-	
-	$sql = "SELECT * FROM topic";
-	$result = mysqli_query($conn, $sql);
-	$list = '';
-	while ($row = mysqli_fetch_array($result)) {
-        $escaped_title = htmlspecialchars($row['title']);
-		$list = $list . "<li><a
+$conn = mysqli_connect('localhost', 'root', 'root', 'opentutorials');
+
+$sql = "SELECT * FROM topic";
+$result = mysqli_query($conn, $sql);
+$list = '';
+while ($row = mysqli_fetch_array($result)) {
+	$escaped_title = htmlspecialchars($row['title']);
+	$list = $list."<li><a
         href=\"index.php?id={$row['id']}\">{$escaped_title}
         </a></li>";
-	}
- 
-	$article = array(
-		'title' => 'Welcome',
-		'description' => 'Hello Yael'
-	);
-    if (isset($_GET['id'])) {
-    $filteredId = mysqli_real_escape_string($conn, $_GET['id']);
+}
+
+$article = array(
+	'title' => 'Welcome',
+	'description' => 'Hello Yael'
+);
+$update_link = '';
+if (isset($_GET['id'])) {
+	$filteredId = mysqli_real_escape_string($conn, $_GET['id']);
 	$sql = "SELECT * FROM topic WHERE id = {$filteredId}";
 	$result = mysqli_query($conn, $sql);
 	$row = mysqli_fetch_array($result);
 	$article['title'] = htmlspecialchars($row['title']);
-    $article['description'] = htmlspecialchars($row['description']);
-    }
+	$article['description'] = htmlspecialchars($row['description']);
+	$update_link = '<a href="update.php?id='.$_GET['id'].'">update</a>';
+}
 
 ?>
 <!doctype html>
@@ -37,9 +39,10 @@
 <body>
 <h1><a href="index.php">WEB</a></h1>
 <ol>
-	<?= $list ?>
+	<?=$list?>
 </ol>
 <a href="create.php">create</a>
+<?=$update_link?>
 <h2><?=$article['title']?></h2>
 <?=$article['description']?>
 </body>
