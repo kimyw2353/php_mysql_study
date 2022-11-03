@@ -17,19 +17,22 @@ $article = array(
 );
 $update_link = '';
 $delete_link = '';
+$author = '';
 if (isset($_GET['id'])) {
 	$filteredId = mysqli_real_escape_string($conn, $_GET['id']);
-	$sql = "SELECT * FROM topic WHERE id = {$filteredId}";
+	$sql = "SELECT * FROM topic LEFT JOIN author ON topic.author_id = author.id WHERE topic.id = {$filteredId}";
 	$result = mysqli_query($conn, $sql);
 	$row = mysqli_fetch_array($result);
 	$article['title'] = htmlspecialchars($row['title']);
 	$article['description'] = htmlspecialchars($row['description']);
+	$article['name'] = htmlspecialchars($row['name']);
 	$update_link = '<a href="update.php?id='.$_GET['id'].'">update</a>';
 	$delete_link = '
 	    <form action = "process_delete.php" method = "post">
 	        <input type="hidden" name="id" value="'.$_GET['id'].'">
 	        <input type="submit" value="delete">
 		</form>';
+	$author = "<p>by {$article['name']}</p>";
 }
 
 ?>
@@ -52,5 +55,6 @@ if (isset($_GET['id'])) {
 		<?=$delete_link?>
 		<h2><?=$article['title']?></h2>
 		<?=$article['description']?>
+		<?=$author?>
 	</body>
 </html>
