@@ -5,8 +5,9 @@
 	$result = mysqli_query($conn, $sql);
 	$list = '';
 	while ($row = mysqli_fetch_array($result)) {
+		$escaped_title = htmlspecialchars($row['title']);
 		$list = $list . "<li><a
-        href=\"index.php?id={$row['id']}\">{$row['title']}
+        href=\"index.php?id={$row['id']}\">{$escaped_title}
         </a></li>";
 	}
 	
@@ -14,15 +15,6 @@
 		'title' => 'Welcome',
 		'description' => 'Hello Yael'
 	);
-	if (isset($_GET['id'])) {
-		$filteredId = mysqli_real_escape_string($conn, $_GET['id']);
-		$sql = "SELECT * FROM topic WHERE id = {$filteredId}";
-		$result = mysqli_query($conn, $sql);
-		$row = mysqli_fetch_array($result);
-		$article['title'] = $row['title'];
-		$article['description'] = $row['description'];
-	}
-
 ?>
 <!doctype html>
 <html lang="en">
