@@ -16,4 +16,3 @@
 	} else {
 		echo '저장되었습니다. <a href = "index.php">돌아가기</a>';
 	}
-	echo $sql;
